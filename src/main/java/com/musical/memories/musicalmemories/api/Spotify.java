@@ -2,9 +2,6 @@ package com.musical.memories.musicalmemories.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.musical.memories.musicalmemories.api.auth.Authentication;
-import com.musical.memories.musicalmemories.datatransferobjects.GeniusResponse;
-import com.musical.memories.musicalmemories.datatransferobjects.Hit;
-import com.musical.memories.musicalmemories.datatransferobjects.Response;
 import com.musical.memories.musicalmemories.datatransferobjects.Token;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.slf4j.Logger;
@@ -15,14 +12,12 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+
 import java.util.Map;
 
 public class Spotify {
@@ -31,11 +26,11 @@ public class Spotify {
     private Logger logger = LoggerFactory.getLogger(Spotify.class);
     private String clientId;
     private String clientSecret;
-    private static final String redirectURI = "http://localhost:8080/";
+    private static final String redirectURI = "http://localhost:8080/callback";
 
     public Spotify(){
        this.clientId = new Authentication().getAPIKey("client-id");
-       this.clientSecret = new Authentication().getAPIKey("clientSecret");
+       this.clientSecret = new Authentication().getAPIKey("client-secret");
     }
 
 
@@ -52,6 +47,7 @@ public class Spotify {
         httpHeaders.set("grant_type", "authorization_code");
         Map<String, String> queryMap =  getQueryMap(queryString);
         String code = queryMap.get("code");
+        httpHeaders.set("redirect_uri", redirectURI);
         httpHeaders.set("code", code);
         HttpEntity<String> httpEntity = new HttpEntity<>("body",httpHeaders);
         return httpEntity;
@@ -61,16 +57,17 @@ public class Spotify {
     {
         String response = null;
         try {
-            URI uri = new URI(String.format("https://accounts.spotify.com/authorize?client_id=%s&response_type=code" +
-                            "&redirect_uri=%s&scope=user-read-private%20user-read-email&state=34fFs29kd09",
-                    URLEncoder.encode(clientId, "UTF-8"),URLEncoder.encode(clientId, "UTF-8"),redirectURI));
+            URI uri = new URI("https://accounts.spotify.com/authorize?client_id="+URLEncoder.encode(clientId,"UTF-8")+"&response_type=code" +
+                            "&redirect_uri="+URLEncoder.encode(redirectURI, "UTF-8")+"&scope=user-read-private%20user-read-email&state=34fFs29kd09");
             ResponseEntity<String> responseVal = restTemplate.getForEntity(uri, String.class);
             response = responseVal.toString();
+           // logger.info("response: "+response);
         }
         catch(Exception ex)
         {
             logger.error(ex.toString());
         }
+        return response;
     }
 
     //request refresh and access tokens;
@@ -84,6 +81,7 @@ public class Spotify {
             HttpEntity httpEntity = createHttpEntity(queryString);
             ResponseEntity<Token> responseVal = restTemplate.exchange(uri, HttpMethod.POST, httpEntity, Token.class);
             token = responseVal.getBody();
+            logger.info(token.getAccessToken());
 
         }
         catch(URISyntaxException ex)
