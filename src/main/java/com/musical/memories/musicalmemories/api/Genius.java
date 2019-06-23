@@ -24,7 +24,7 @@ public class Genius {
     private String accessToken;
 
     public Genius(){
-        accessToken = new Authentication().getAPIKey("client-access-token");
+        this.accessToken = new Authentication().getAPIKey("client-access-token");
     }
 
 
