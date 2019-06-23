@@ -13,13 +13,8 @@ public class MusicalMemoriesApplication implements CommandLineRunner {
     }
     @Override
     public void run(String... args) {
-//		OMDBService movieService = new OMDBService();
-//		Movie movie = movieService.findMovie("Avengers: Endgame");
-//		System.out.println(movie.toString());
-        //		GoogleBooksService s = new GoogleBooksService();
-        //		s.findBook("scary");
         Genius genius = new Genius();
-        genius.findSong("Kendrick");
+        System.out.println(genius.findTopHitTitle("Kendrick"));
     }
 
 }

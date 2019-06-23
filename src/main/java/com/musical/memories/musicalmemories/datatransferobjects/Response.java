@@ -9,6 +9,5 @@ import java.util.List;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Response {
-    @JsonProperty("hits")
     List<Hit> hits;
 }
