@@ -1,16 +1,22 @@
 package com.musical.memories.musicalmemories.controllers;
 
 import com.musical.memories.musicalmemories.api.Spotify;
+import com.musical.memories.musicalmemories.api.SpotifyService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 @RestController
 public class UserController {
+    private SpotifyService spotifyService = new SpotifyService();
 
     @RequestMapping("/callback")
     public String tokenValue(@RequestParam(value="code", defaultValue="Spotify access code") String value) {
-        System.out.println("value: "+value);
+        spotifyService.setCode(value);
+        spotifyService.authorizationCode();
         return null;
     }
 
@@ -20,9 +26,9 @@ public class UserController {
     }
 
     @RequestMapping("/")
-    public String val() {
-        Spotify spotify = new Spotify();
-        String val = spotify.authorize();
-        return "redirect:"+val;
+    public void val(HttpServletResponse response) throws IOException {
+        SpotifyService spotifyService = new SpotifyService();
+        String val = spotifyService.authorization();
+        response.sendRedirect(val);
     }
 }
