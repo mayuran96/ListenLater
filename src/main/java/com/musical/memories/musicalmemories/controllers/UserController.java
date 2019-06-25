@@ -15,8 +15,11 @@ public class UserController {
 
     @RequestMapping("/callback")
     public String tokenValue(@RequestParam(value="code", defaultValue="Spotify access code") String value) {
+        System.out.println("code: "+value);
         spotifyService.setCode(value);
         spotifyService.authorizationCode();
+        spotifyService.refresh();
+        spotifyService.searchTrack("Don't look back in Anger");
         return null;
     }
 
