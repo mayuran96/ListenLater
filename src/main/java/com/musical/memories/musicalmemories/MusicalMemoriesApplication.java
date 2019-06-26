@@ -1,7 +1,5 @@
 package com.musical.memories.musicalmemories;
 
-import com.musical.memories.musicalmemories.api.Genius;
-import com.musical.memories.musicalmemories.api.Spotify;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,7 +16,7 @@ public class MusicalMemoriesApplication implements CommandLineRunner {
     public void run(String... args) {
         //Spotify spotify = new Spotify();
         //String val = spotify.authorize();
-        //Genius genius = new Genius();
+        //GeniusService genius = new GeniusService();
         //System.out.println(genius.findTopHitTitle("Kendrick"));
        // spotify.requestToken();
     }

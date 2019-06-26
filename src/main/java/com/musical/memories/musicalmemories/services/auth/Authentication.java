@@ -1,4 +1,4 @@
-package com.musical.memories.musicalmemories.api.auth;
+package com.musical.memories.musicalmemories.services.auth;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

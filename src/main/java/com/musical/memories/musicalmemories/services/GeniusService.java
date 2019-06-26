@@ -1,13 +1,14 @@
-package com.musical.memories.musicalmemories.api;
+package com.musical.memories.musicalmemories.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.musical.memories.musicalmemories.api.auth.Authentication;
+import com.musical.memories.musicalmemories.services.auth.Authentication;
 import com.musical.memories.musicalmemories.datatransferobjects.GeniusResponse;
 import com.musical.memories.musicalmemories.datatransferobjects.Hit;
 import com.musical.memories.musicalmemories.datatransferobjects.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -17,13 +18,14 @@ import java.net.URLEncoder;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Genius {
+@Service
+public class GeniusService {
     private RestTemplate restTemplate = new RestTemplate();
     private ObjectMapper objectMapper = new ObjectMapper();
-    private Logger logger = LoggerFactory.getLogger(Genius.class);
+    private Logger logger = LoggerFactory.getLogger(GeniusService.class);
     private String accessToken;
 
-    public Genius(){
+    public GeniusService(){
         this.accessToken = new Authentication().getAPIKey("client-access-token");
     }
 
