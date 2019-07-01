@@ -28,7 +28,7 @@ class Landing extends Component {
         if(this.state.lyric!==null)
         {
             $.ajax({
-                url: '/v1/lyric?lyric='+this.state.lyric,
+                url: '/song?lyric='+this.state.lyric,
                 method: "POST",
                 statusCode: {
                     200: () => {

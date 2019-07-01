@@ -23,12 +23,11 @@ public class SpotifyController {
     private Logger logger = LoggerFactory.getLogger(SpotifyController.class);
     private String lyric;
 
-    @PostMapping("/v1/lyric")
+    @PostMapping("/song")
     public void getLyric(@RequestParam("lyric") String lyric, HttpServletResponse response) throws IOException
     {
         logger.info(String.format("lyric: %s", lyric));
         setLyric(lyric);
-        //response.sendRedirect("http://localhost:3000/authorization");
     }
 
     @RequestMapping("/callback")
@@ -50,22 +49,10 @@ public class SpotifyController {
     }
 
     @GetMapping("/authorization")
-    public String authorization(HttpServletResponse response) throws IOException{
-        //try {
+    public String authorization() throws IOException{
             logger.info("Spotify Authorization started");
             URI authorizationURI = spotifyService.authorization();
-            response.setHeader("Access-Control-Allow-Origin", "*");
-            response.setHeader("Access-Control-Allow-Credentials", "true");
-            response.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTIONS, HEAD");
-            response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With");
-            //response.sendRedirect(authorizationURI.toString());
             return authorizationURI.toString();
-//        }
-//        catch(IOException ex)
-//        {
-//            logger.error("Spotify authorization failed");
-//            throw ex;
-//        }
     }
 
     public String getLyric() {
