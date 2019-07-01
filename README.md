@@ -1,11 +1,10 @@
 # ListenLater
 
-Steps to run the front-end:
-add "proxy": "http://localhost:8080" to the package.json file when running locally
+Steps to run:
+add "proxy": "http://localhost:8080" to the package.json file
 cd musical-memories-react
 npm run start
 
-To run the back-end:
 run MusicalMemoriesApplication found in the package com.musical.memories.musicalmemories
 
 You must create your secrets directory and put your 
