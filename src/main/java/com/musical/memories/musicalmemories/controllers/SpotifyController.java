@@ -1,9 +1,7 @@
 package com.musical.memories.musicalmemories.controllers;
 
-import com.musical.memories.musicalmemories.services.GeniusService;
 import com.musical.memories.musicalmemories.services.SpotifyService;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
-import javafx.scene.effect.Light;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

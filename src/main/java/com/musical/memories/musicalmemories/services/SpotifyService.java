@@ -33,7 +33,6 @@ public class SpotifyService {
     private String code;
     private String accessToken;
     private String refreshToken;
-    private SpotifyApi spotApi;
     private static final String redirectURI = "http://localhost:8080/callback";
     private static final Logger logger = LoggerFactory.getLogger(SpotifyService.class);
 
