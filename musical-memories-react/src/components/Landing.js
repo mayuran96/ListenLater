@@ -24,14 +24,24 @@ class Landing extends Component {
 
     submit(event) {
         event.preventDefault();
+        console.log(this.state.lyric);
         if(this.state.lyric!==null)
         {
             $.ajax({
-                url: '/v1/lyric?q='+this.state.lyric,
+                url: '/v1/lyric?lyric='+this.state.lyric,
                 method: "POST",
                 statusCode: {
                     200: () => {
                         console.log("success!")
+                        $.ajax({
+                            url: '/authorization',
+                            method: "GET",
+                            success: function (resp) {
+                                console.log(resp)
+                                window.location.href = resp;
+                                return resp;
+                            },
+                        });
                     }
                 }
             });
@@ -39,22 +49,25 @@ class Landing extends Component {
     }
 
     render() {
-        return (<div>
-            <div className="jumbotron"></div>
-            <div className="container">
-                <div className ="row">
-                    <div className=".col-sm-6">
-                    <form className="form-horizontal">
-                        <input className="form-control" type="text" name="lyric" id="lyric" placeholder="Lyric"
-                               onChange={this.handleLyricChange}/>
-                        <button onClick={this.submit} id="submitBtn" type="submit"
-                                className="btn btn-primary"><span className="glyphicon glyphicon-ok"></span>
-                        </button>
-                    </form>
-                    </div>
+        return (
+            <div>
+                <div className="jumbotron text-center">
+                    <h1>ListenLater</h1>
                 </div>
+                <div className="row">
+                    <div className="col-sm-4">
+                    </div>
+                    <div className="col-sm-4">
+                        <form className="form-inline">
+                            <div className="form-group">
+                                <input type="text" className="form-control" id="lyric" placeholder="Lyric" onChange={this.handleLyricChange}/>
+                            </div>
+                            <button type="submit" id="submitBtn" onClick = {this.submit} className="btn btn-primary mb-2">submit</button>
+                        </form>
+                    </div>
+                 </div>
             </div>
-        </div>);
+      ) ;
     }
 }
 
